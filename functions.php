@@ -252,7 +252,6 @@ function save_career_meta_boxes_data( $post_id ) {
 add_action( 'save_post', 'save_career_meta_boxes_data' );
 
 
-
 // Register the widget
 class Recent_Posts_With_Images_Widget extends WP_Widget {
     
@@ -270,9 +269,11 @@ class Recent_Posts_With_Images_Widget extends WP_Widget {
             echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
         }
 
+        $num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 5;
+
         $query_args = array(
             'post_type' => 'post',
-            'posts_per_page' => 5,
+            'posts_per_page' => $num_posts,
             'post_status' => 'publish'
         );
         $recent_posts = new WP_Query($query_args);
@@ -282,7 +283,7 @@ class Recent_Posts_With_Images_Widget extends WP_Widget {
                 ?>
                 <div class="post">
                     <?php if (has_post_thumbnail()) : ?>
-                        <img src="<?php the_post_thumbnail_url('large'); ?>" class="post-image" alt="<?php the_title(); ?>">
+                        <img src="<?php the_post_thumbnail_url('thumbnail'); ?>" class="post-image" alt="<?php the_title(); ?>">
                     <?php endif; ?>
                     <div class="post-details">
                         <h6 class="post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
@@ -300,10 +301,15 @@ class Recent_Posts_With_Images_Widget extends WP_Widget {
 
     public function form($instance) {
         $title = !empty($instance['title']) ? $instance['title'] : __('Recent Posts', 'text_domain');
+        $num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 5;
         ?>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_attr_e('Title:', 'text_domain'); ?></label> 
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('num_posts')); ?>"><?php esc_attr_e('Number of posts to show:', 'text_domain'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('num_posts')); ?>" name="<?php echo esc_attr($this->get_field_name('num_posts')); ?>" type="number" value="<?php echo esc_attr($num_posts); ?>" min="1">
         </p>
         <?php 
     }
@@ -311,6 +317,7 @@ class Recent_Posts_With_Images_Widget extends WP_Widget {
     public function update($new_instance, $old_instance) {
         $instance = array();
         $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        $instance['num_posts'] = (!empty($new_instance['num_posts'])) ? absint($new_instance['num_posts']) : 5;
         return $instance;
     }
 }
@@ -319,6 +326,12 @@ function register_recent_posts_with_images_widget() {
     register_widget('Recent_Posts_With_Images_Widget');
 }
 add_action('widgets_init', 'register_recent_posts_with_images_widget');
+
+// Enqueue styles for the widget
+function enqueue_recent_posts_widget_styles() {
+    wp_enqueue_style('recent-posts-widget-style', get_template_directory_uri() . '/recent-posts-widget.css');
+}
+add_action('wp_enqueue_scripts', 'enqueue_recent_posts_widget_styles');
 
 
 ?>
