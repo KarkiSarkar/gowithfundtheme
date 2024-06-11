@@ -165,7 +165,7 @@ function handle_form_submission() {
     if (isset($_POST['submit'])) {
         // Sanitize form inputs
         $name = sanitize_text_field($_POST['name']);
-        $email = sanitize_email($_POST['email']);
+        $cemail = sanitize_email($_POST['email']);
         $cover_letter = sanitize_textarea_field($_POST['cover_letter']);
         $file = isset($_FILES['file']) ? $_FILES['file'] : null;
 
@@ -180,7 +180,7 @@ function handle_form_submission() {
 
         // Email message for recipient
         $email_message = "Name: $name\n";
-        $email_message .= "Email: $email\n";
+        $email_message .= "Email: $cemail\n";
         $email_message .= "Cover Letter:\n$cover_letter\n";
 
         // From header
@@ -215,7 +215,7 @@ function handle_form_submission() {
 
         $user_headers = array($from_header, 'Content-Type: text/plain; charset=UTF-8');
 
-        wp_mail($email, $user_email_subject, $user_email_message, $user_headers);
+        wp_mail($cemail, $user_email_subject, $user_email_message, $user_headers);
 
         return $success;
     }
