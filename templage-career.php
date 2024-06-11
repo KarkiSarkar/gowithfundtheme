@@ -35,6 +35,15 @@ Template Name: Career Archive Template
  ?>
 <section id="wp-main-content" class="clearfix main-page">
     <?php do_action( 'krowd_before_page_content' ); ?>
+    <?php if($left_sidebar_config['active']): ?>
+         <div class="sidebar wp-sidebar sidebar-left <?php echo esc_attr($left_sidebar_config['class']); ?>">
+            <?php do_action( 'krowd_before_sidebar' ); ?>
+            <div class="sidebar-inner">
+               <?php dynamic_sidebar($left_sidebar_config['name'] ); ?>
+            </div>
+            <?php do_action( 'krowd_after_sidebar' ); ?>
+         </div>
+         <?php endif ?>
    <div class="container"> 
     <?php
         // Custom query to fetch 'career' post type
