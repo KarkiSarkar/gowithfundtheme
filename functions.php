@@ -252,4 +252,73 @@ function save_career_meta_boxes_data( $post_id ) {
 add_action( 'save_post', 'save_career_meta_boxes_data' );
 
 
+
+// Register the widget
+class Recent_Posts_With_Images_Widget extends WP_Widget {
+    
+    public function __construct() {
+        parent::__construct(
+            'recent_posts_with_images_widget',
+            __('Recent Posts with Images', 'text_domain'),
+            array('description' => __('A Widget to display recent posts with images, titles, and dates', 'text_domain'))
+        );
+    }
+
+    public function widget($args, $instance) {
+        echo $args['before_widget'];
+        if (!empty($instance['title'])) {
+            echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
+        }
+
+        $query_args = array(
+            'post_type' => 'post',
+            'posts_per_page' => 5,
+            'post_status' => 'publish'
+        );
+        $recent_posts = new WP_Query($query_args);
+        if ($recent_posts->have_posts()) {
+            echo '<div class="recent-posts-widget">';
+            while ($recent_posts->have_posts()) : $recent_posts->the_post();
+                ?>
+                <div class="post">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <img src="<?php the_post_thumbnail_url('large'); ?>" class="post-image" alt="<?php the_title(); ?>">
+                    <?php endif; ?>
+                    <div class="post-details">
+                        <h6 class="post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
+                        <p class="post-date"><?php echo get_the_date(); ?></p>
+                    </div>
+                </div>
+                <?php
+            endwhile;
+            echo '</div>';
+            wp_reset_postdata();
+        }
+
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : __('Recent Posts', 'text_domain');
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_attr_e('Title:', 'text_domain'); ?></label> 
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <?php 
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        return $instance;
+    }
+}
+
+function register_recent_posts_with_images_widget() {
+    register_widget('Recent_Posts_With_Images_Widget');
+}
+add_action('widgets_init', 'register_recent_posts_with_images_widget');
+
+
 ?>
