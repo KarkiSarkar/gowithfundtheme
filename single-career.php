@@ -160,10 +160,10 @@ if (isset($_POST['submit'])) {
                 
 <?php
 
-
 // Handle form submission function
 function handle_form_submission() {
     if (isset($_POST['submit'])) {
+        // Sanitize form inputs
         $name = sanitize_text_field($_POST['name']);
         $email = sanitize_email($_POST['email']);
         $cover_letter = sanitize_textarea_field($_POST['cover_letter']);
@@ -173,14 +173,19 @@ function handle_form_submission() {
         $recipient_email = 'career@gowithfund.com'; // Replace with your recipient email
         global $post;
         $post_name = get_the_title($post->ID);
-        // Email subject
-        $email_subject = 'New Career Application for '.$post_name;
-        
+        $site_name = get_bloginfo('name');
 
-        // Email message
+        // Email subject for recipient
+        $email_subject = 'New Career Application for '.$post_name;
+
+        // Email message for recipient
         $email_message = "Name: $name\n";
         $email_message .= "Email: $email\n";
         $email_message .= "Cover Letter:\n$cover_letter\n";
+
+        // From header
+        $from_header = 'From: '.$site_name.' <no-reply@'.$_SERVER['SERVER_NAME'].'>';
+        $headers = array($from_header);
 
         // Handle file upload
         $attachments = array();
@@ -193,18 +198,31 @@ function handle_form_submission() {
             }
         }
 
-        // Send email
-        $success = wp_mail($recipient_email, $email_subject, $email_message, array(), $attachments);
+        // Send email to recipient
+        $success = wp_mail($recipient_email, $email_subject, $email_message, $headers, $attachments);
 
         // Remove uploaded file if it exists
         if ($file && file_exists($file_path)) {
             unlink($file_path);
         }
 
+        // Send confirmation email to user
+        $user_email_subject = 'Application Received';
+        $user_email_message = "Dear $name,\n\n";
+        $user_email_message .= "Thank you for your application for the position of $post_name. We have received your application and will review it shortly.\n\n";
+        $user_email_message .= "Best regards,\n";
+        $user_email_message .= $site_name;
+
+        $user_headers = array($from_header, 'Content-Type: text/plain; charset=UTF-8');
+
+        wp_mail($email, $user_email_subject, $user_email_message, $user_headers);
+
         return $success;
     }
     return false;
 }
+
+
 ?>
 
 
