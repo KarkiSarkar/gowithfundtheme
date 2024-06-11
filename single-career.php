@@ -170,7 +170,7 @@ function handle_form_submission() {
         $file = isset($_FILES['file']) ? $_FILES['file'] : null;
 
         // Recipient email address
-        $recipient_email = $email; // Replace with your recipient email
+        $recipient_email = 'career@gowithfund.com'; // Replace with your recipient email
         global $post;
         $post_name = get_the_title($post->ID);
         // Email subject
