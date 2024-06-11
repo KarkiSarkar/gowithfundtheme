@@ -327,4 +327,13 @@ function register_recent_posts_with_images_widget() {
 }
 add_action('widgets_init', 'register_recent_posts_with_images_widget');
 
+
+function custom_redirect() {
+    if (is_page('career')) {
+        wp_redirect('https://gowithfund.com/careers/', 301);
+        exit();
+    }
+}
+add_action('template_redirect', 'custom_redirect');
+
 ?>
