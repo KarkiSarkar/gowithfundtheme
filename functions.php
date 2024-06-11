@@ -327,11 +327,4 @@ function register_recent_posts_with_images_widget() {
 }
 add_action('widgets_init', 'register_recent_posts_with_images_widget');
 
-// Enqueue styles for the widget
-function enqueue_recent_posts_widget_styles() {
-    wp_enqueue_style('recent-posts-widget-style', get_template_directory_uri() . '/recent-posts-widget.css');
-}
-add_action('wp_enqueue_scripts', 'enqueue_recent_posts_widget_styles');
-
-
 ?>
