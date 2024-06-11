@@ -40,7 +40,7 @@ Template Name: Career Archive Template
  </style>
 <section id="wp-main-content" class="clearfix main-page">
     <?php do_action( 'krowd_before_page_content' ); ?>
-    <div class="career_single_wrapper">
+    <div class="career_single_wrapper container">
     <?php if($right_sidebar_config['active']): ?>
          <div class="sidebar wp-sidebar sidebar-right <?php echo esc_attr($right_sidebar_config['class']); ?>">
             <?php do_action( 'krowd_before_sidebar' ); ?>
