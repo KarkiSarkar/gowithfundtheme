@@ -1,0 +1,184 @@
+/*
+Theme Name:GoWithFund
+Theme URI: http://gaviasthemes.com/krowd/
+Description: GoWithFund Theme. Child theme of krowd
+Author: Karki
+Author URI: http://example.com
+Template: krowd
+Version: 1.0.0
+*/
+
+.btn-theme-2 {
+    color: #ffffff !important;
+}
+
+.custom-breadcrumb .breadcrumb-container-inner .heading-title {
+    color: #ffffff !important;
+}
+
+.wpcf7-submit,
+.gsc-image-content.skin-v3 .box-content .desc {
+    background: none !important;
+    color: #ffffff !important;
+}
+
+.disclaimer .main-page-content p,
+.disclaimer .main-page-content li,
+.privacy-policy .main-page-content p,
+.privacy-policy .main-page-content li,
+.terms-and-conditions .main-page-content p,
+.terms-and-conditions .main-page-content li,
+.return-and-refund-policy .main-page-content p,
+.return-and-refund-policy .main-page-content li,
+.single-post .content-inner p{
+    color: black !important;
+}
+
+.single-post .content-inner a{
+    color: #00A9A5!important;
+}
+.single-post .content-inner a:hover{
+    color: #0C2D30!important;
+}
+
+.disclaimer .main-page-content strong,
+.privacy-policy .main-page-content strong,
+.terms-and-conditions .main-page-content strong,
+.return-and-refund-policy .main-page-content strong
+{
+    color: #000000 !important;
+}
+
+.wpneo-tooltip-empty{
+    display: none;
+}
+
+.btn-theme-2:after{
+    background: transparent!important;
+}
+
+.btn-black:hover , .post:hover .content-inner .read-more .icon {
+    color: #ffffff!important;
+  }
+  .btn-theme:hover, .wpcf7-list-item-label{
+      color: #ffffff!important;
+  }
+  
+  /*#reward_options > p{*/
+  /*    display: none;*/
+  /*}*/
+  
+  .hidden {
+    display: none;
+}
+.wc-block-components-checkout-return-to-cart-button{
+    display: none!important;
+}
+
+.post-type-archive-success_story .read-more> a > svg{
+    width: 20px!important;
+}
+.post-type-archive-success_story .posts-grids article.success_story{
+    border: 1px solid #00A9A5;
+    padding: 20px;
+    box-shadow: -1px 2px 5px #aaa;
+}
+
+#menu-main-menu-2{
+    background: #ffffff!important;
+}
+/*.star-rating{*/
+/*    display: none;*/
+/*}*/
+.single-product .wpneo-campaign-creator-avatar{
+    display: none!important;
+}
+
+ .wp-crowd-btn-primary:hover, .wp-crowd-btn:hover{
+    color: white!important;
+}
+.elementor-icon-box-description > a{
+    color: #ffffff!important;
+}
+.elementor-icon-box-description > a:hover{
+    color: #0C2D30!important;
+}
+.single-product p >span a,.single-product p > a, .privacy-policy .main-page-content a, .return-and-refund-policy .main-page-content a, .disclaimer .main-page-content a, .terms-and-conditions .main-page-content a{
+    color: #00A9A5;
+}
+.single-product p>span a:hover, .single-product p > a:hover{
+    color: #0C2D30!important;
+}
+strong{
+    color: #000000!important;
+}
+.menu-item-10773{
+	display: none!important;
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-item-10773{
+	display: block!important;
+}
+}
+
+.tab-description > p , .wpneo-single-short-description > div > p{
+    text-align: justify; /* Grow, shrink, use auto width */
+}
+
+.wpneo-list-details .campaign-top .campaign-single-left .woocommerce-product-gallery__trigger:after{
+    /*display: none;*/
+}
+.search-results .post:hover .entry-content .content-inner .read-more a svg {
+    width: 22px;
+    fill: white;
+    position: relative;
+    top: 2px;
+}
+.archive  .content-inner .read-more a > svg{
+    display: block;
+    line-height: 68px;
+    width: 22px;
+    top: 20px!important;
+    left: 20px;
+}
+
+.post:hover .read-more a > svg{
+    fill: white!important;
+}
+
+.comment-form-cookies-consent{
+    display: flex;
+    align-items: flex-start;
+}
+.comment-form-cookies-consent label{
+    padding-left: 10px;
+}
+
+.woocommerce #review_form #respond p {
+    margin: 0 0 30px!important;
+}
+.woocommerce #respond p {
+    font-size: 16px!important;
+    font-weight: 400!important;
+}
+
+.pitch_deck_url{
+    padding: 20px;
+    background-color: #00A9A5;
+    color: white;
+    border: 1px solid #00A9A5;
+}
+.pitch_deck_url:hover{
+    padding: 20px;
+    background-color: #ffffff;
+    color: black;
+}
+
+#wpneo-tab-pitch_deck_pdf{
+    display: flex;
+    justify-content: center;
+}
+.related_posts_title{
+    padding: 30px 0px;
+ }
