@@ -33,11 +33,15 @@ Template Name: Career Archive Template
     extract($sidebar_config);
 
  ?>
+ <style>
+    .career_single_wrapper{
+        display: flex;
+    }
+ </style>
 <section id="wp-main-content" class="clearfix main-page">
     <?php do_action( 'krowd_before_page_content' ); ?>
-    
-   <div class="container"> 
-   <?php if($right_sidebar_config['active']): ?>
+    <div class="career_single_wrapper">
+    <?php if($right_sidebar_config['active']): ?>
          <div class="sidebar wp-sidebar sidebar-right <?php echo esc_attr($right_sidebar_config['class']); ?>">
             <?php do_action( 'krowd_before_sidebar' ); ?>
                <div class="sidebar-inner">
@@ -46,6 +50,8 @@ Template Name: Career Archive Template
             <?php do_action( 'krowd_after_sidebar' ); ?>
          </div>
          <?php endif ?>
+   
+   <div class="container"> 
     <?php
         // Custom query to fetch 'career' post type
         $args = array(
@@ -82,7 +88,7 @@ Template Name: Career Archive Template
                                     border: 1px solid #00A9A5;
                                 }
                                 .apply_now_button:hover{
-                                    padding: 10px 20px; 
+                                    padding: 5px 10px; 
                                     background-color: #ffffff!important;
                                     color: #00A9A5;
                                 }
@@ -126,7 +132,7 @@ Template Name: Career Archive Template
 
         <?php wp_reset_postdata(); // Reset the post data to avoid conflicts ?>
     </div>
-    
+    </div>
 </section>
 
 <?php get_footer(); ?>
