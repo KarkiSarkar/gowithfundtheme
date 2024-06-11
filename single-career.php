@@ -54,7 +54,7 @@
                     <div class="entry-header">
                     <?php if ( has_post_thumbnail() ) : ?>
                         <a href="<?php the_permalink(); ?>">
-                            <?php echo get_the_post_thumbnail( $post->ID, 'medium' ); ?>
+                            <?php echo get_the_post_thumbnail( $post->ID, 'large' ); ?>
                         </a>
                     <?php endif; ?>
                     <div>
