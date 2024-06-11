@@ -48,63 +48,43 @@
 <section id="wp-main-content" class="clearfix main-page">
     <?php do_action( 'krowd_before_page_content' ); ?>
    <div class="container">  
-    <div class="main-page-content row">
-         <div class="content-page <?php echo esc_attr($main_content_config['class']); ?>">      
-            <div id="wp-content" class="wp-content clearfix">
-            <div class="entry-header">
-        <?php if ( has_post_thumbnail() ) : ?>
-            <a href="<?php the_permalink(); ?>">
-                <?php echo get_the_post_thumbnail( $post->ID, 'medium' ); ?>
-            </a>
-        <?php endif; ?>
-
-       
-        <div>
-            <strong>Job Title:</strong> <?php echo esc_html( the_title()); ?>
-        </div>
-        <div>
-            <strong>Company Name:</strong> <?php echo esc_html( get_post_meta( get_the_ID(), '_career_company', true ) ); ?>
-        </div>
-        <div>
-            <strong>Location:</strong> <?php echo esc_html( get_post_meta( get_the_ID(), '_career_location', true ) ); ?>
-        </div>
-        
-    </div><!-- .entry-header -->
-
-    <div class="entry-content">
-        <?php the_content(); ?>
-    </div><!-- .entry-content -->
-    <div style="border: 1px solid #00A9A5; padding: 20px; background: #00A9A5; color: white; margin: 20px 0px;">
-        <?php //echo do_shortcode('[simple_form]'); ?>
-
-
-
-
-
-
-
-
-<!-- Custom Start -->
-
-<?php
-
-
-// Check if the form is submitted
-if (isset($_POST['submit'])) {
-    // Handle form submission
-    if (handle_form_submission()) {
-        echo '<p>Thank you for your application!</p>';
-    } else {
-        echo '<p>There was an error processing your application. Please try again later.</p>';
-    }
-}
-
-// Start the WordPress loop
-
-    ?>
-   
+        <div class="main-page-content row">
+            <div class="content-page <?php echo esc_attr($main_content_config['class']); ?>">      
+                <div id="wp-content" class="wp-content clearfix">
+                    <div class="entry-header">
+                    <?php if ( has_post_thumbnail() ) : ?>
+                        <a href="<?php the_permalink(); ?>">
+                            <?php echo get_the_post_thumbnail( $post->ID, 'medium' ); ?>
+                        </a>
+                    <?php endif; ?>
+                    <div>
+                        <strong>Job Title:</strong> <?php echo esc_html( the_title()); ?>
+                    </div>
+                    <div>
+                        <strong>Company Name:</strong> <?php echo esc_html( get_post_meta( get_the_ID(), '_career_company', true ) ); ?>
+                    </div>
+                    <div>
+                        <strong>Location:</strong> <?php echo esc_html( get_post_meta( get_the_ID(), '_career_location', true ) ); ?>
+                    </div>
+                </div><!-- .entry-header -->
+                <div class="entry-content">
+                    <?php the_content(); ?>
+                </div><!-- .entry-content -->
+                <div style="border: 1px solid #00A9A5; padding: 20px; background: #00A9A5; color: white; margin: 20px 0px;">
+                    <?php
+                    // Check if the form is submitted
+                    if (isset($_POST['submit'])) {
+                        // Handle form submission
+                        if (handle_form_submission()) {
+                            echo '<p>Thank you for your application!</p>';
+                        } else {
+                            echo '<p>There was an error processing your application. Please try again later.</p>';
+                        }
+                    }
+                    // Start the WordPress loop
+                    ?>
                     <form id="career-form" method="post" action="" enctype="multipart/form-data">
-                    <?php the_title('<h1 class="entry-title" style="color: white;">Apply for ', '</h1>'); ?>
+                        <?php the_title('<h1 class="entry-title" style="color: white;">Apply for ', '</h1>'); ?>
                         <p>
                             <label for="name">Name:</label>
                             <input type="text" id="name" name="name" required>
@@ -126,132 +106,104 @@ if (isset($_POST['submit'])) {
                         </p>
                     </form>
                     <script>
-                         document.addEventListener('DOMContentLoaded', function() {
-                                var form = document.getElementById('career-form');
-                                form.addEventListener('submit', function(event) {
-                                    var name = document.getElementById('name').value;
-                                    var email = document.getElementById('email').value;
-                                    var coverLetter = document.getElementById('cover-letter').value;
-                                    var file = document.getElementById('file').value;
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var form = document.getElementById('career-form');
+                            form.addEventListener('submit', function(event) {
+                                var name = document.getElementById('name').value;
+                                var email = document.getElementById('email').value;
+                                var coverLetter = document.getElementById('cover-letter').value;
+                                var file = document.getElementById('file').value;
 
-                                    var errors = [];
+                                var errors = [];
 
-                                    if (!name) {
-                                        errors.push("Please enter your name.");
-                                    }
-                                    if (!email) {
-                                        errors.push("Please enter your email address.");
-                                    }
-                                    if (!coverLetter) {
-                                        errors.push("Please enter your cover letter.");
-                                    }
-                                    if (!file) {
-                                        errors.push("Please upload your resume.");
-                                    }
+                                if (!name) {
+                                    errors.push("Please enter your name.");
+                                }
+                                if (!email) {
+                                    errors.push("Please enter your email address.");
+                                }
+                                if (!coverLetter) {
+                                    errors.push("Please enter your cover letter.");
+                                }
+                                if (!file) {
+                                    errors.push("Please upload your resume.");
+                                }
 
-                                    if (errors.length > 0) {
-                                        event.preventDefault(); // Prevent form submission
-                                        alert(errors.join("\n")); // Display error messages
-                                    }
-                                    
-                                });
+                                if (errors.length > 0) {
+                                    event.preventDefault(); // Prevent form submission
+                                    alert(errors.join("\n")); // Display error messages
+                                }
+                                
                             });
+                        });
                     </script>
-                
-<?php
+                    <?php
+                    // Handle form submission function
+                    function handle_form_submission() {
+                        if (isset($_POST['submit'])) {
+                            // Sanitize form inputs
+                            $name = sanitize_text_field($_POST['name']);
+                            $cemail = sanitize_email($_POST['email']);
+                            $cover_letter = sanitize_textarea_field($_POST['cover_letter']);
+                            $file = isset($_FILES['file']) ? $_FILES['file'] : null;
 
-// Handle form submission function
-function handle_form_submission() {
-    if (isset($_POST['submit'])) {
-        // Sanitize form inputs
-        $name = sanitize_text_field($_POST['name']);
-        $cemail = sanitize_email($_POST['email']);
-        $cover_letter = sanitize_textarea_field($_POST['cover_letter']);
-        $file = isset($_FILES['file']) ? $_FILES['file'] : null;
+                            // Recipient email address
+                            $recipient_email = 'career@gowithfund.com'; // Replace with your recipient email
+                            global $post;
+                            $post_name = get_the_title($post->ID);
+                            $site_name = get_bloginfo('name');
 
-        // Recipient email address
-        $recipient_email = 'career@gowithfund.com'; // Replace with your recipient email
-        global $post;
-        $post_name = get_the_title($post->ID);
-        $site_name = get_bloginfo('name');
+                            // Email subject for recipient
+                            $email_subject = 'New Career Application for '.$post_name;
 
-        // Email subject for recipient
-        $email_subject = 'New Career Application for '.$post_name;
+                            // Email message for recipient
+                            $email_message = "Name: $name\n";
+                            $email_message .= "Email: $cemail\n";
+                            $email_message .= "Cover Letter:\n$cover_letter\n";
 
-        // Email message for recipient
-        $email_message = "Name: $name\n";
-        $email_message .= "Email: $cemail\n";
-        $email_message .= "Cover Letter:\n$cover_letter\n";
+                            // From header
+                            $from_header = 'From: '.$site_name.' <no-reply@'.$_SERVER['SERVER_NAME'].'>';
+                            $headers = array($from_header);
 
-        // From header
-        $from_header = 'From: '.$site_name.' <no-reply@'.$_SERVER['SERVER_NAME'].'>';
-        $headers = array($from_header);
+                            // Handle file upload
+                            $attachments = array();
+                            if ($file) {
+                                $upload_dir = wp_upload_dir();
+                                $file_name = basename($file['name']);
+                                $file_path = $upload_dir['path'] . '/' . $file_name;
+                                if (move_uploaded_file($file['tmp_name'], $file_path)) {
+                                    $attachments[] = $file_path;
+                                }
+                            }
 
-        // Handle file upload
-        $attachments = array();
-        if ($file) {
-            $upload_dir = wp_upload_dir();
-            $file_name = basename($file['name']);
-            $file_path = $upload_dir['path'] . '/' . $file_name;
-            if (move_uploaded_file($file['tmp_name'], $file_path)) {
-                $attachments[] = $file_path;
-            }
-        }
+                            // Send email to recipient
+                            $success = wp_mail($recipient_email, $email_subject, $email_message, $headers, $attachments);
 
-        // Send email to recipient
-        $success = wp_mail($recipient_email, $email_subject, $email_message, $headers, $attachments);
+                            // Remove uploaded file if it exists
+                            if ($file && file_exists($file_path)) {
+                                unlink($file_path);
+                            }
 
-        // Remove uploaded file if it exists
-        if ($file && file_exists($file_path)) {
-            unlink($file_path);
-        }
+                            // Send confirmation email to user
+                            // $user_email_subject = 'Application Received';
+                            // $user_email_message = "Dear $name,\n\n";
+                            // $user_email_message .= "Thank you for your application for the position of $post_name. We have received your application and will review it shortly.\n\n";
+                            // $user_email_message .= "Best regards,\n";
+                            // $user_email_message .= $site_name;
 
-        // Send confirmation email to user
-        // $user_email_subject = 'Application Received';
-        // $user_email_message = "Dear $name,\n\n";
-        // $user_email_message .= "Thank you for your application for the position of $post_name. We have received your application and will review it shortly.\n\n";
-        // $user_email_message .= "Best regards,\n";
-        // $user_email_message .= $site_name;
+                            // $user_headers = array($from_header, 'Content-Type: text/plain; charset=UTF-8');
 
-        // $user_headers = array($from_header, 'Content-Type: text/plain; charset=UTF-8');
+                            // wp_mail($cemail, $user_email_subject, $user_email_message, $user_headers);
 
-        // wp_mail($cemail, $user_email_subject, $user_email_message, $user_headers);
-
-        return $success;
-    }
-    return false;
-}
-
-
-?>
-
-
-<!-- Custom end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-    <div class="entry-footer">
-        
-        
-    </div><!-- .entry-footer -->
+                            return $success;
+                        }
+                        return false;
+                    }
+                    ?>
+                    <!-- Custom end -->
+                </div>
             </div>    
-         </div>      
-
+        </div>      
          <!-- Left sidebar -->
          <?php if($left_sidebar_config['active']): ?>
          <div class="sidebar wp-sidebar sidebar-left <?php echo esc_attr($left_sidebar_config['class']); ?>">
