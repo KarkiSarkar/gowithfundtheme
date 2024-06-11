@@ -207,7 +207,16 @@ function handle_form_submission() {
         }
 
         // Send confirmation email to user
-        
+        // $user_email_subject = 'Application Received';
+        // $user_email_message = "Dear $name,\n\n";
+        // $user_email_message .= "Thank you for your application for the position of $post_name. We have received your application and will review it shortly.\n\n";
+        // $user_email_message .= "Best regards,\n";
+        // $user_email_message .= $site_name;
+
+        // $user_headers = array($from_header, 'Content-Type: text/plain; charset=UTF-8');
+
+        // wp_mail($cemail, $user_email_subject, $user_email_message, $user_headers);
+
         return $success;
     }
     return false;
